@@ -1,34 +1,38 @@
 #include "shell.h"
 
-int main(int ac, char **argv)
+int main(void)
 {
 	char *command = NULL, *command_copy = NULL;
 	size_t len = 0;
 	ssize_t reader;
 	int token_num = 0;
 	char *token;
-	int i;
+	int i = 0;
+	char **argv;
 
-	/* declar void variables */
-	(void)ac;
+	printf("$ ");
+	reader = getline(&command, &len, stdin);
+	
+	command_copy = malloc(sizeof(char) * reader);
 
-	/* infite loop */
-	while (1)
+	 if (command_copy == NULL)
+	 {
+		 perror("Allocation Error");
+		 return (-1);
+	 }
+
+	 /* make a copy of the command */
+	 strcpy(command_copy, command);
+
+	/* check if getlind faild or not */
+	if (reader == -1)
 	{
-		printf("$ ");
-		reader = getline(&command, &len, stdin);
-		/* check if getlind faild or not */
-		if (reader == -1)
-		{
-			printf("Exiting Shell......\n");
-			return (-1);
-		}
-		if (command_copy == NULL)
-		{
-			perror("Allocation Error");
-			return (1);
-		}
-		strcpy(command_copy, command);
+		printf("Exiting Shell......\n");
+		return (-1);
+	}
+	else
+	{
+
 		/************** split the string (command) & returns an array of each word *************/
 		/* calculate the total number of token */
 		token = strtok(command, " \n");
@@ -54,7 +58,6 @@ int main(int ac, char **argv)
 			token = strtok(NULL, " \n");
 		}
 		argv[i] = NULL;
-
 
 
 		printf("%s\n", command);
