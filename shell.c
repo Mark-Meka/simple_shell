@@ -1,71 +1,82 @@
 #include "shell.h"
-
-int main(void)
+  
+void sigintHandler(int signo)
 {
-	char *command = NULL, *command_copy = NULL;
-	size_t len = 0;
-	ssize_t reader;
-	int token_num = 0;
-	char *token;
-	int i = 0;
-	char **argv;
+    printf("\n"); // Print a newline to format the output
+}
 
-	printf("$ ");
-	reader = getline(&command, &len, stdin);
-	
-	command_copy = malloc(sizeof(char) * reader);
+int main(int argc, char **argv)
+{
+    char *command = NULL;
+    size_t len = 0;
+    char *stkn;
+    pid_t my_pid;
+    int status;
 
-	 if (command_copy == NULL)
-	 {
-		 perror("Allocation Error");
-		 return (-1);
-	 }
+    // Set up a signal handler for Ctrl+C (SIGINT)
+    signal(SIGINT, sigintHandler);
 
-	 /* make a copy of the command */
-	 strcpy(command_copy, command);
+    while (1)
+    {
+        printf("$ ");
+        getline(&command, &len, stdin);
 
-	/* check if getlind faild or not */
-	if (reader == -1)
-	{
-		printf("Exiting Shell......\n");
-		return (-1);
-	}
-	else
-	{
+        // Remove newline character
+        command[strcspn(command, "\n")] = '\0';
 
-		/************** split the string (command) & returns an array of each word *************/
-		/* calculate the total number of token */
-		token = strtok(command, " \n");
+        if (strcmp(command, "exit") == 0)
+        {
+            free(command);
+            exit(0);
+        }
 
-		while (token != NULL)
-		{
-			token_num++;
-			token = strtok(NULL, " \n");
-		}
-		token_num++;
+        char *arr[MAX_ARGUMENTS];
+        int i = 0;
+        stkn = strtok(command, " ");
+        while (stkn != NULL && i < MAX_ARGUMENTS - 1)
+        {
+            arr[i] = stkn;
+            stkn = strtok(NULL, " ");
+            i++;
+        }
+        arr[i] = NULL; // Null-terminate the array
 
-		/* Allocate to in array */
-		argv = malloc(sizeof(char *) * token_num);
+        my_pid = fork();
+        if (my_pid == -1)
+        {
+            perror("Error");
+            free(command);
+            exit(1);
+        }
+        else if (my_pid == 0)
+        {
+            // Handle input and output redirection
+            // Example: cmd < input.txt > output.txt 2>&1
+            // ...
 
-		/* store each token in the array */
-		token = strtok(command_copy, " \n");
-
-		for (i = 0; token != NULL; i++)
-		{
-			argv[i] = malloc(sizeof(char) * strlen(token));
-			strcpy(argv[i], token);
-
-			token = strtok(NULL, " \n");
-		}
-		argv[i] = NULL;
-
-
-		printf("%s\n", command);
-
-		/* free up allocated memory */
-		free(argv);
-		free(command);
-		free(command_copy);
-	}
-	return (0);
+            if (execvp(arr[0], arr) == -1)
+            {
+                perror("execvp");
+                free(command);
+                exit(1);
+            }
+        }
+        else
+        {
+            // Check if the command runs in the background
+            if (i > 0 && strcmp(arr[i - 1], "&") == 0)
+            {
+                // Handle background process
+                printf("Running in the background: %s\n", arr[0]);
+                // Optionally, you can add this process to a list and manage background jobs
+            }
+            else
+            {
+                // Wait for the child process to finish
+                wait(&status);
+            }
+        }
+    }
+    free(command);
+    return 0;
 }
