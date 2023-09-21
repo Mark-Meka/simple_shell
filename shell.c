@@ -96,10 +96,6 @@ int main (void)
 				token = strtok(NULL, " ");
 			}
 		}
-
-		else if ( strcmp(args[0], "                ") == 0)
-			break;
-	}
 		args[2] = token;
 		args[3] = NULL;
 
@@ -117,6 +113,6 @@ int main (void)
 		{
 			printf("command not found.\n");
 		}
+	}
 	exit(EXIT_SUCCESS);
-	
 }
