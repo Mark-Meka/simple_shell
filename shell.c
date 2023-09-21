@@ -35,9 +35,6 @@ int main (void)
 
 		input[strcspn(input, "\n")] = '\0';
 
-		if (strcmp(input, "exit") == 0 || strcmp(input, "exit 1000") == 0 || strcmp(input, "exit 98") == 0 || strcmp(input, "exit -98") == 0)
-			break;
-
 		token = strtok(input, " ");
 		args[0] = token;
 		args[1] = NULL;
@@ -96,6 +93,18 @@ int main (void)
 				token = strtok(NULL, " ");
 			}
 		}
+
+		else if (strcmp(args[0], "exit") == 0)
+            {
+                token = strtok(NULL, " ");
+                if (token != NULL) {
+                    int exitStatus = atoi(token);
+                    exit(exitStatus);
+                }
+                else {
+                    exit(0);
+                }
+            }
 		args[2] = token;
 		args[3] = NULL;
 
