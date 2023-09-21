@@ -6,7 +6,7 @@
  */
 int main(void)
 {
-	char input[MAX_INPUT_LENGTH], *args[2];
+	char input[MAX_INPUT_LENGTH], *args[4];
 	char *token;
 
 	while (printf("simple_shell$ ") && fgets(input, sizeof(input), stdin))
@@ -26,8 +26,8 @@ int main(void)
 			if (fork() == 0)
 			{
 				execve(args[0], args, NULL);
-			perror("exit");
-			exit(EXIT_FAILURE);
+				perror("exit");
+				exit(EXIT_FAILURE);
 			}
 			wait(NULL);
 		}
