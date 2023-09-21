@@ -11,10 +11,8 @@ int main(void)
 	while (printf("simple_shell$ ") && fgets(input, sizeof(input), stdin))
 	{
 		input[strcspn(input, "\n")] = '\0';
-
 		if (strcmp(input, "exit") == 0)
 			break;
-
 		if (fork() == 0)
 		{
 			args[0] = input;
