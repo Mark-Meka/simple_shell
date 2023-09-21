@@ -5,5 +5,3 @@
 #include <sys/wait.h>
 
 #define MAX_INPUT_LENGTH 1024
-
-void execute_command(const char *command)
