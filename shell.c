@@ -1,33 +1,19 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <sys/wait.h>
-
-#define MAX_INPUT_LENGTH 1024
-
+#include "shell.h"
 /**
  * main - Entry point for the simple_shell.
  *
  * Return: Always 0.
  */
-int main(void)
+
+int main(int argc, char **argv)
 {
-	char input[MAX_INPUT_LENGTH], *args[2];
+	(void)argc;
+	(void)argv;
 
-	while (printf("simple_shell$ ") && fgets(input, sizeof(input), stdin))
-	{
-		input[strcspn(input, "\n")] = '\0';
+	printf("\t********** Welcome to Our New custom C-Shell **********\n\n");
+	printf("\t\t********** Made for ALX Kenya **********\n\n");
 
-		if (fork() == 0)
-		{
-			args[0] = input;
-			args[1] = NULL;
-			execve(input, args, NULL);
-			perror("execve");
-			exit(EXIT_FAILURE);
-		}
-		wait(NULL);
-	}
-	return (0);
+	shell_loop();
+
+	return (EXIT_SUCCESS);
 }
