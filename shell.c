@@ -7,6 +7,7 @@
 int main(void)
 {
 	char input[MAX_INPUT_LENGTH], *args[2];
+	char *token;
 
 	while (printf("simple_shell$ ") && fgets(input, sizeof(input), stdin))
 	{
@@ -15,15 +16,25 @@ int main(void)
 		if (strcmp(input, "exit") == 0)
 			break;
 
-		if (fork() == 0)
+		token = strtok(input, " ");
+		args[0] = token;
+		args[1] = NULL;
+
+		if (access(args[0], F_OK) == 0)
 		{
-			args[0] = input;
-			args[1] = NULL;
-			execve(input, args, NULL);
+
+			if (fork() == 0)
+			{
+				execve(args[0], args, NULL);
 			perror("exit");
 			exit(EXIT_FAILURE);
+			}
+			wait(NULL);
 		}
-		wait(NULL);
+		else
+		{
+			printf("command not found.\n");
+		}
 	}
 	return (0);
 }
