@@ -11,6 +11,8 @@ int main(void)
 
 	while (fgets(input, sizeof(input), stdin))
 	{
+		char** env = environ;
+
 		input[strcspn(input, "\n")] = '\0';
 
 		if (strcmp(input, "exit") == 0)
@@ -47,7 +49,6 @@ int main(void)
 
 		else if (strcmp(args[0], "env") == 0)
 		{
-			char** env = environ;
 			while (*env != NULL)
 			{
 				printf("%s\n", *env);
@@ -77,7 +78,7 @@ int main(void)
 			}
 			wait(NULL);
 		}
-		else
+		else if (strcmp(args[0], "env") != 0)
 		{
 			printf("command not found.\n");
 		}
