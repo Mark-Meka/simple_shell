@@ -13,7 +13,7 @@
 int main(void)
 {
 	char input[MAX_INPUT_LENGTH], *args[2];
-
+	args[2] = NULL;
 	while (printf("simple_shell$ ") && fgets(input, sizeof(input), stdin))
 	{
 		input[strcspn(input, "\n")] = '\0';
@@ -21,6 +21,10 @@ int main(void)
 		{
 			args[0] = input;
 			args[1] = NULL;
+			
+			if (strcmp(input, "exit") == 0)
+				break;
+
 			execve(input, args, NULL);
 			perror("execve");
 			exit(EXIT_FAILURE);
