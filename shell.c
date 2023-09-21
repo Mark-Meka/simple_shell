@@ -9,8 +9,6 @@ int main(void)
 {
 	char input[MAX_INPUT_LENGTH], *args[4], *token;
 
-	printf("simple_shell$ ");
-
 	while (fgets(input, sizeof(input), stdin))
 	{
 		input[strcspn(input, "\n")] = '\0';
