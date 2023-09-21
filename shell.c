@@ -51,7 +51,7 @@ int main (void)
 			}
 			else
 			{
-				printf("ls: command not found\n");
+				printf("ls: canno access '%s' : No such file or directory\n", args[0]);
 				continue;
 			}
 		}
