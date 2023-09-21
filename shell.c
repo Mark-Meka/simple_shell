@@ -1,17 +1,17 @@
 #include "shell.h"
 /**
- * main - Entry point for the simple_shell.
- *
- * Return: Always 0.
+ * main - main function that sets shell loop function
+ * @ac: argument count/not set
+ * @av: argument vector
+ * Return: Exits if successful.
  */
 
 int main(int argc, char **argv)
 {
-	(void)argc;
-	(void)argv;
+	argc = argc;
+	argv = argv;
 
-	printf("\t********** Welcome to Our New custom C-Shell **********\n\n");
-	printf("\t\t********** Made for ALX Kenya **********\n\n");
+	printf("\t********** Welcome to Our Shell **********\n");
 
 	shell_loop();
 
