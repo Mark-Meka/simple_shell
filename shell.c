@@ -6,9 +6,7 @@
  */
 int main(void)
 {
-	char input[MAX_INPUT_LENGTH], *args[3];
-
-	args[2] = NULL;
+	char input[MAX_INPUT_LENGTH], *args[2];
 
 	while (printf("simple_shell$ ") && fgets(input, sizeof(input), stdin))
 	{
@@ -19,10 +17,10 @@ int main(void)
 
 		if (fork() == 0)
 		{
-			args[0] = "ls";
-			args[1] = "-laR";
-			execvp(args[0], args);
-			perror("execvp");
+			args[0] = input;
+			args[1] = NULL;
+			execve(input, args, NULL);
+			perror("execve");
 			exit(EXIT_FAILURE);
 		}
 		wait(NULL);
