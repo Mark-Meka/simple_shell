@@ -34,6 +34,17 @@ int main(void)
 				token = strtok(NULL, " ");
 			}
 		}
+
+		else if (strcmp(args[0], "/bin/echo") == 0)
+		{
+			token = strtok(NULL, " ");
+			if (token != NULL)
+			{
+				args[1] = token;
+				token = strtok(NULL, " ");
+			}
+		}
+
 		args[2] = token;
 		args[3] = NULL;
 
