@@ -35,7 +35,7 @@ int main (void)
 
 		input[strcspn(input, "\n")] = '\0';
 
-		if (strcmp(input, "exit") == 0 || strcmp(input, "exit 1000") == 0)
+		if (strcmp(input, "exit") == 0 || strcmp(input, "exit 1000") == 0 || strcmp(input, "exit 98") == 0 || strcmp(input, "exit -98") == 0)
 			break;
 
 		token = strtok(input, " ");
