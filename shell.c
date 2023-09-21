@@ -1,4 +1,5 @@
 #include "shell.h"
+#include <string.h>
 /**
  * main - Entry point for the simple_shell.
  *
@@ -8,7 +9,9 @@ int main(void)
 {
 	char input[MAX_INPUT_LENGTH], *args[4], *token;
 
-	while (printf("simple_shell$ ") && fgets(input, sizeof(input), stdin))
+	printf("simple_shell$ ");
+
+	while (fgets(input, sizeof(input), stdin))
 	{
 		input[strcspn(input, "\n")] = '\0';
 
