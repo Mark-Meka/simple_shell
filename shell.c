@@ -45,6 +45,23 @@ int main(void)
 			}
 		}
 
+		else if (strcmp(args[0], "env") == 0)
+		{
+			char** env = environ;
+			while (*env != NULL)
+			{
+				printf("%s\n", *env);
+				env++;
+			}
+		
+			token = strtok(NULL, " ");
+			if (token != NULL)
+			{
+				args[1] = token;
+				token = strtok(NULL, " ");
+			}
+		}
+
 		args[2] = token;
 		args[3] = NULL;
 
