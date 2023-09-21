@@ -51,5 +51,5 @@ int main(void)
 			printf("command not found.\n");
 		}
 	}
-	return (0);
+	exit(EXIT_SUCCESS);
 }
