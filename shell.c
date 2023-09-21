@@ -42,7 +42,21 @@ int main (void)
 		args[0] = token;
 		args[1] = NULL;
 
-		if (strcmp(args[0], "/bin/ls")  == 0 || strcmp(args[0], "/htbn_ls") == 0)
+		if (strcmp(args[0], "ls") == 0)
+		{
+			char *executablePath = findExecutable("ls");
+			if (executablePath != NULL)
+			{
+				args[0] = executablePath;
+			}
+			else
+			{
+				printf("ls: command not found\n");
+				continue;
+			}
+		}
+
+		else if (strcmp(args[0], "/bin/ls")  == 0 || strcmp(args[0], "./htbn_ls") == 0)
 		{
 			token = strtok(NULL, " ");
 			if (token != NULL && strcmp(token, "-l") == 0)
@@ -54,15 +68,6 @@ int main (void)
 			{
 				args[1] = token;
 				token = strtok(NULL, " ");
-			}
-		}
-		
-		else if (strcmp(args[0], "ls") ==0)
-		{
-			char *executablePath = findExecutable("ls");
-			if (executablePath != NULL)
-			{
-				args[0] = executablePath;
 			}
 		}
 
@@ -92,6 +97,9 @@ int main (void)
 			}
 		}
 
+		else if ( strcmp(args[0], "                ") == 0)
+			break;
+	}
 		args[2] = token;
 		args[3] = NULL;
 
@@ -99,18 +107,16 @@ int main (void)
 		{
 			if (fork() == 0)
 			{
-				dup2(STDOUT_FILENO, fileno(stdout));
-
 				execve(args[0], args, NULL);
 				perror("exit");
 				exit(EXIT_FAILURE);
 			}
 			wait(NULL);
 		}
-		else if (strcmp(args[0], "env") != 0)
+		else
 		{
 			printf("command not found.\n");
 		}
-	}
 	exit(EXIT_SUCCESS);
+	
 }
