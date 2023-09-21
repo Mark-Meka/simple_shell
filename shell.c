@@ -5,7 +5,27 @@
  *
  * Return: Always 0.
  */
-int main(void)
+char *findExecutable(const char *command)
+{
+	char *path = getenv("PATH");
+	char *token = strtok(path, ":");
+
+	while (token != NULL)
+	{
+		char executablePath[256];
+		snprintf(executablePath, sizeof(executablePath), "%s/%s", token, command);
+
+		if (access(executablePath, X_OK) == 0)
+		{
+			return strdup(executablePath);
+		}
+
+		token = strtok(NULL, ":");
+	}
+	return (NULL);
+}
+
+int main (void)
 {
 	char input[MAX_INPUT_LENGTH], *args[4], *token;
 
@@ -34,6 +54,15 @@ int main(void)
 			{
 				args[1] = token;
 				token = strtok(NULL, " ");
+			}
+		}
+		
+		else if (strcmp(args[0], "ls") ==0)
+		{
+			char *executablePath = findExecutable("ls");
+			if (executablePath != NULL)
+			{
+				args[0] = executablePath;
 			}
 		}
 
