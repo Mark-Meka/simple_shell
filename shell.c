@@ -1,19 +1,18 @@
 #include "shell.h"
-/**
- * main - main function that sets shell loop function
- * @ac: argument count/not set
- * @av: argument vector
- * Return: Exits if successful.
+/*
+ * main - The main shell
+ *
+ * Return: Always 0.
  */
 
-int main(int argc, char **argv)
-{
-	argc = argc;
-	argv = argv;
+int main(void) {
+	char command[120];
 
-	printf("\t********** Welcome to Our Shell **********\n");
-
-	shell_loop();
-
-	return (EXIT_SUCCESS);
+	while (true) 
+	{
+		display_prompt();
+		read_command(command, sizeof(command));
+		execute_command(command);
+	}
+	return (0);
 }
