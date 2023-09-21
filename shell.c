@@ -20,7 +20,7 @@ int main(void)
 		args[0] = token;
 		args[1] = NULL;
 
-		if (strcmp(args[0], "/bin/ls") == 0)
+		if (strcmp(args[0], "/bin/ls")  == 0 || strcmp(args[0], "/htbn_ls") == 0)
 		{
 			token = strtok(NULL, " ");
 			if (token != NULL && strcmp(token, "-l") == 0)
