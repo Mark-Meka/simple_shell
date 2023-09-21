@@ -40,6 +40,8 @@ int main(void)
 		{
 			if (fork() == 0)
 			{
+				dup2(STDOUT_FILENO, fileno(stdout));
+
 				execve(args[0], args, NULL);
 				perror("exit");
 				exit(EXIT_FAILURE);
