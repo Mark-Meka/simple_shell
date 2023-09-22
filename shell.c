@@ -96,6 +96,7 @@ int main (void)
 
 		else if (strcmp(args[0], "exit") == 0)
             {
+		    printf("/n");
                 token = strtok(NULL, " ");
                 if (token != NULL) {
                     int exitStatus = atoi(token);
