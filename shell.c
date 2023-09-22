@@ -104,6 +104,7 @@ int main (void)
                 else {
                     exit(0);
                 }
+		printf("/n");
             }
 		args[2] = token;
 		args[3] = NULL;
