@@ -48,8 +48,8 @@ int main (void)
 			}
 			else
 			{
-				printf("ls: canno access '%s' : No such file or directory\n", args[0]);
-				continue;
+				fprintf(stderr, "/bin/ls: cannot access '%s' : No such file or directory\n", args[0]);
+                continue;
 			}
 		}
 
@@ -104,7 +104,6 @@ int main (void)
                 else {
                     exit(0);
                 }
-		printf("/n");
             }
 		args[2] = token;
 		args[3] = NULL;
