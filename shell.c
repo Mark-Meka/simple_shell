@@ -118,10 +118,7 @@ int main (void)
 			}
 			wait(NULL);
 		}
-		else
-		{
-			printf("command not found.\n");
-		}
+
 	}
 	exit(EXIT_SUCCESS);
 }
