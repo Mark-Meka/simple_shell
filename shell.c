@@ -118,7 +118,6 @@ int main (void)
 			}
 			wait(NULL);
 		}
-
 	}
 	exit(EXIT_SUCCESS);
 }
